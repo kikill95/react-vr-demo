@@ -10,12 +10,11 @@ import {
 } from 'react-vr'
 
 const assets = [
-  'city.jpg',
-  'park1.jpg',
-  'sea.jpg',
-  'park2.jpg',
-  'mountains.jpg',
-  'fireworks.jpg'
+  'rsz_city-min.jpg',
+  'rsz_park1-min.jpg',
+  'rsz_sea-min.jpg',
+  'rsz_park2-min.jpg',
+  'rsz_mountains-min.jpg'
 ]
 const assetsLength = assets.length
 
@@ -25,11 +24,19 @@ export default class App extends React.Component {
 
     this.state = {
       currentAssetIndex: 0,
+      canPlayAudio: false,
       playControl: 'stop'
     }
 
     this.changeAsset = this.changeAsset.bind(this)
     this.togglePlayStatus = this.togglePlayStatus.bind(this)
+    this.startAudio = this.startAudio.bind(this)
+  }
+
+  startAudio (event) {
+    if (event.nativeEvent.playStatus === 'ready') {
+      this.setState({canPlayAudio: true})
+    }
   }
 
   changeAsset () {
@@ -43,7 +50,7 @@ export default class App extends React.Component {
   render () {
     return (
       <View>
-        <Pano source={asset(assets[this.state.currentAssetIndex])} />
+        <Pano source={asset(assets[this.state.currentAssetIndex])}/>
         <Sound
           source={{
             ogg: asset('coldplay.ogg'),
@@ -51,46 +58,47 @@ export default class App extends React.Component {
           }}
           loop
           playControl={this.state.playControl}
+          onPlayStatusChange={this.startAudio}
         />
         <VrButton
-          style={{width: 2.5}}
-          onButtonPress={this.changeAsset}>
+          style={{width: 2.5, display: this.state.canPlayAudio ? 'flex' : 'none'}}
+          onEnter={this.togglePlayStatus}>
           <Text
             style={{
               backgroundColor: '#777879',
               fontSize: 0.4,
               fontWeight: '400',
-              layoutOrigin: [0.5, 0.8],
+              layoutOrigin: [0.5, 8],
               paddingLeft: 0.2,
               paddingRight: 0.2,
               textAlign: 'center',
               textAlignVertical: 'center',
-              transform: [{translate: [0, 0, -3]}]
+              transform: [{translate: [0, 0, -7]}, {rotateX : 30}]
             }}>
-            Next Panorama
+            Sound turn {this.state.playControl === 'play' ? 'off' : 'on'}
           </Text>
         </VrButton>
         <VrButton
-          style={{width: 2}}
-          onButtonPress={this.togglePlayStatus}>
+          style={{width: 2.5}}
+          onEnter={this.changeAsset}>
           <Text
             style={{
               backgroundColor: '#777879',
               fontSize: 0.4,
               fontWeight: '400',
-              layoutOrigin: [0.5, 0.2],
+              layoutOrigin: [0.5, 8],
               paddingLeft: 0.2,
               paddingRight: 0.2,
               textAlign: 'center',
               textAlignVertical: 'center',
-              transform: [{translate: [0, 0, -3]}]
+              transform: [{translate: [0, 0, 7]}, {rotateY : 180}, {rotateX : 30}]
             }}>
-            Sound turn {this.state.playControl === 'play' ? 'off' : 'on'}
+            Next Panorama
           </Text>
         </VrButton>
       </View>
     )
   }
-};
+}
 
 AppRegistry.registerComponent('App', () => App)
