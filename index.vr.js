@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import {
   AppRegistry,
   asset,
   Pano,
   Text,
   View,
-  VrButton,
-} from 'react-vr';
+  VrButton
+} from 'react-vr'
 
 export default class App extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -19,14 +19,14 @@ export default class App extends React.Component {
     this.changeColor = this.changeColor.bind(this)
   }
 
-  changeColor() {
+  changeColor () {
     this.setState({textColor: this.state.textColor === 'darkblue' ? 'red' : 'darkblue'})
   }
 
-  render() {
+  render () {
     return (
       <View>
-        <Pano source={asset('chess-world.jpg')}/>
+        <Pano source={asset('chess-world.jpg')} />
         <VrButton
           style={{width: 2}}
           onButtonPress={this.changeColor}
@@ -42,14 +42,14 @@ export default class App extends React.Component {
               paddingRight: 0.2,
               textAlign: 'center',
               textAlignVertical: 'center',
-              transform: [{translate: [0, 0, -3]}],
+              transform: [{translate: [0, 0, -3]}]
             }}>
             hello
           </Text>
         </VrButton>
       </View>
-    );
+    )
   }
 };
 
-AppRegistry.registerComponent('App', () => App);
+AppRegistry.registerComponent('App', () => App)
