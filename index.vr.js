@@ -10,9 +10,12 @@ import {
 } from 'react-vr'
 
 const assets = [
-  'chess-world.jpg',
-  'chess-world.jpg',
-  'chess-world.jpg'
+  'city.jpg',
+  'park1.jpg',
+  'sea.jpg',
+  'park2.jpg',
+  'mountains.jpg',
+  'fireworks.jpg'
 ]
 const assetsLength = assets.length
 
