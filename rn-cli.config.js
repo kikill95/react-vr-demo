@@ -1,37 +1,37 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var blacklist = require('./node_modules/react-native/packager/blacklist');
+var path = require('path')
+var blacklist = require('./node_modules/react-native/packager/blacklist')
 
 var config = {
-  getProjectRoots() {
-    return getRoots();
+  getProjectRoots () {
+    return getRoots()
   },
 
-  getBlacklistRE() {
+  getBlacklistRE () {
     return blacklist([
-    ]);
+    ])
   },
 
-  getAssetExts() {
-    return ['obj', 'mtl'];
+  getAssetExts () {
+    return ['obj', 'mtl']
   },
 
-  getPlatforms() {
-    return ['vr'];
+  getPlatforms () {
+    return ['vr']
   },
 
-  getProvidesModuleNodeModules() {
-    return ['react-native', 'react-vr'];
-  },
-};
-
-function getRoots() {
-  var root = process.env.REACT_NATIVE_APP_ROOT;
-  if (root) {
-    return [path.resolve(root)];
+  getProvidesModuleNodeModules () {
+    return ['react-native', 'react-vr']
   }
-  return [path.resolve(__dirname)];
 }
 
-module.exports = config;
+function getRoots () {
+  var root = process.env.REACT_NATIVE_APP_ROOT
+  if (root) {
+    return [path.resolve(root)]
+  }
+  return [path.resolve(__dirname)]
+}
+
+module.exports = config
