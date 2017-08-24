@@ -5,46 +5,84 @@ import {
   Pano,
   Text,
   View,
-  VrButton
+  VrButton,
+  Sound
 } from 'react-vr'
+
+const assets = [
+  'chess-world.jpg',
+  'chess-world.jpg',
+  'chess-world.jpg'
+]
+const assetsLength = assets.length
 
 export default class App extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      textColor: 'darkblue'
+      currentAssetIndex: 0,
+      playControl: 'stop'
     }
 
-    this.changeColor = this.changeColor.bind(this)
+    this.changeAsset = this.changeAsset.bind(this)
+    this.togglePlayStatus = this.togglePlayStatus.bind(this)
   }
 
-  changeColor () {
-    this.setState({textColor: this.state.textColor === 'darkblue' ? 'red' : 'darkblue'})
+  changeAsset () {
+    this.setState({currentAssetIndex: this.state.currentAssetIndex >= assetsLength - 1 ? 0 : this.state.currentAssetIndex + 1})
+  }
+
+  togglePlayStatus () {
+    this.setState({playControl: this.state.playControl === 'play' ? 'pause' : 'play'})
   }
 
   render () {
     return (
       <View>
-        <Pano source={asset('chess-world.jpg')} />
+        <Pano source={asset(assets[this.state.currentAssetIndex])} />
+        <Sound
+          source={{
+            ogg: asset('coldplay.ogg'),
+            mp3: asset('coldplay.mp3')
+          }}
+          loop
+          playControl={this.state.playControl}
+        />
         <VrButton
-          style={{width: 2}}
-          onButtonPress={this.changeColor}
-          onEnter={this.changeColor}>
+          style={{width: 2.5}}
+          onButtonPress={this.changeAsset}>
           <Text
             style={{
               backgroundColor: '#777879',
-              color: this.state.textColor,
-              fontSize: 0.8,
+              fontSize: 0.4,
               fontWeight: '400',
-              layoutOrigin: [0.5, 0.5],
+              layoutOrigin: [0.5, 0.8],
               paddingLeft: 0.2,
               paddingRight: 0.2,
               textAlign: 'center',
               textAlignVertical: 'center',
               transform: [{translate: [0, 0, -3]}]
             }}>
-            hello
+            Next Panorama
+          </Text>
+        </VrButton>
+        <VrButton
+          style={{width: 2}}
+          onButtonPress={this.togglePlayStatus}>
+          <Text
+            style={{
+              backgroundColor: '#777879',
+              fontSize: 0.4,
+              fontWeight: '400',
+              layoutOrigin: [0.5, 0.2],
+              paddingLeft: 0.2,
+              paddingRight: 0.2,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              transform: [{translate: [0, 0, -3]}]
+            }}>
+            Sound turn {this.state.playControl === 'play' ? 'off' : 'on'}
           </Text>
         </VrButton>
       </View>
